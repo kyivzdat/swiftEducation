@@ -1,0 +1,9 @@
+var strLen = string.count
+
+a> = 0 && b <= 4
+a..b
+
+a> = 0 && b = 4
+a..<b
+
+a..	a>..	..<b	..b
