@@ -1,4 +1,4 @@
-// Initilization
+// initialisation
 var set1: Set<Int> = [1, 2, 3]
 var set2: Set = [4, 5, 6]
 var set3 = Set<String>(arrayLiteral: "abc", "def")
