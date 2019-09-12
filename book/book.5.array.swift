@@ -30,7 +30,8 @@ arr += arr2
 // .contains(number) true/false
 // .index(of: )
 // .min() .max()
-// .reversed() !! var arr14: [Int] = arr9.reversed() || [Int]arr9.reversed() !!
+// .reversed() !! var arr14: [Int] = arr9.reversed() || [Int]arr9.reversed() !! <- return new collection
+// .reverse() <- reverse collection it self
 
 print(arr3.count)
 print("\(arr3.isEmpty)\n\(arr5.isEmpty)")
@@ -59,4 +60,6 @@ print(arr9.max())                   // 20
 print(arr.min())                    // d
 print(arr9)
 var arr14: [Int] = arr9.reversed()
-print([Int](arr9.reversed()))
+arr9.reverse()
+print(arr9)
+print(arr14)
