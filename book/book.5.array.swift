@@ -31,7 +31,7 @@ arr += arr2
 // .index(of: )
 // .min() .max()
 // .reversed() !! var arr14: [Int] = arr9.reversed() || [Int]arr9.reversed() !! <- return new collection
-// .reverse() <- reverse collection it self
+// .reverse() <- reverse collection itself
 
 print(arr3.count)
 print("\(arr3.isEmpty)\n\(arr5.isEmpty)")
