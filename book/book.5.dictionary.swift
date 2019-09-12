@@ -1,7 +1,7 @@
 // initialisation
 
-// Dictionary(uniqueKeysWithValuse: collection)
-// Dictionary(uniqueKeysWithValuse: zip(collect1, collect2))
+// Dictionary(uniqueKeysWithValues: collection)
+// Dictionary(uniqueKeysWithValues: zip(collect1, collect2))
 
 var dict1 = ["one":1, "two":2]
 
