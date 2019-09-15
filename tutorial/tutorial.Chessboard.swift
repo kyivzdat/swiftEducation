@@ -6,39 +6,67 @@ func printPosFigure(chessman: [Figure]) {
 }
 
 func printFigure(unit: Figure) {
-    if unit.color == Chessman.Color.white {
-        switch unit.figure {
-        case .king:
+    switch (unit.figure, unit.color, unit.pos) {
+        case (.king, .white, _):
             print("\u{2654}", terminator: "")
-        case .queen:
-            print("\u{2655}", terminator: "")
-        case .rook:
-            print("\u{2656}", terminator: "")
-        case .bishop:
-            print("\u{2657}", terminator: "")
-        case .knight:
-            print("\u{2658}", terminator: "")
-        case .pawn:
-            print("\u{2659}", terminator: "")
-        }
-    } else {
-        switch unit.figure {
-        case .king:
+        case (.king, .black, _):
             print("\u{265A}", terminator: "")
-         case .queen:
+        case (.queen, .white, _):
+            print("\u{2655}", terminator: "")
+        case (.queen, .black, _):
             print("\u{265B}", terminator: "")
-        case .rook:
+        case (.rook, .white, _):
+            print("\u{2656}", terminator: "")
+        case (.rook, .black, _):
             print("\u{265C}", terminator: "")
-        case .bishop:
+        case (.bishop, .white, _):
+            print("\u{2657}", terminator: "")
+        case (.bishop, .black, _):
             print("\u{265D}", terminator: "")
-        case .knight:
+        case (.knight, .white, _):
+            print("\u{2658}", terminator: "")
+        case (.knight, .black, _):
             print("\u{265E}", terminator: "")
-        case .pawn:
+        case (.pawn, .white, _):
+            print("\u{2659}", terminator: "")
+        case (.pawn, .black, _):
             print("\u{265F}", terminator: "")
-        }  
     }
-  
 }
+
+// func printFigure(unit: Figure) {
+//     if unit.color == Chessman.Color.white {
+//         switch unit.figure {
+//             case .king:
+//                 print("\u{2654}", terminator: "")
+//             case .queen:
+//                 print("\u{2655}", terminator: "")
+//             case .rook:
+//                 print("\u{2656}", terminator: "")
+//             case .bishop:
+//                 print("\u{2657}", terminator: "")
+//             case .knight:
+//                 print("\u{2658}", terminator: "")
+//             case .pawn:
+//                 print("\u{2659}", terminator: "")
+//         }
+//     } else {
+//         switch unit.figure {
+//             case .king:
+//                 print("\u{265A}", terminator: "")
+//              case .queen:
+//                 print("\u{265B}", terminator: "")
+//             case .rook:
+//                 print("\u{265C}", terminator: "")
+//             case .bishop:
+//                 print("\u{265D}", terminator: "")
+//             case .knight:
+//                 print("\u{265E}", terminator: "")
+//             case .pawn:
+//                 print("\u{265F}", terminator: "")
+//         }  
+//     }
+// }
 
 func printChessboard(chessman: [Figure]) {
     var white = true
@@ -87,7 +115,7 @@ typealias Figure = (figure: Chessman, color: Chessman.Color, pos: Position)
 
 var chessman : [Figure] = []
 
-chessman.append((figure: .knight, color: .black, pos: (letter: "E", num: 1)))
+chessman.append((figure: .king, color: .black, pos: (letter: "E", num: 1)))
 chessman.append((figure: .queen, color: .white, pos: (letter: "G", num: 2)))
 chessman.append((figure: .rook, color: .white, pos: (letter: "A", num: 1)))
 
