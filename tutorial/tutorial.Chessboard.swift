@@ -60,7 +60,8 @@ func moveFigure(chessman: inout [Figure], unit: Figure, pos: (char: Character, n
         position == pos
     })
     let (char, num) = pos
-    if UnicodeScalar(String(char))!.value - 64 < 1 || UnicodeScalar(String(char))!.value - 64 > 8  || num < 1 || num > 8 || collision == true {
+    if UnicodeScalar(String(char))!.value - 64 < 1 || UnicodeScalar(String(char))!.value - 64 > 8
+	|| num < 1 || num > 8 || collision == true {
         print("Wrong coordinates")
         return
     }
