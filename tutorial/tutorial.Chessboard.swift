@@ -34,6 +34,39 @@ func printFigure(unit: Figure) {
     }
 }
 
+func moveFigure(chessman: inout [Figure], unit: Figure, pos: (char: Character, num: Int)) {
+    var exist = false
+    // var i = 0
+    // for _ in chessman {
+    //     let (figure, color, _) = chessman[i]
+    //     if figure == unit.figure && color == unit.color {
+    //         exist = true
+    //         break 
+    //     }
+    //     i += 1
+    // }
+    let i = chessman.index(where: {
+        (figure: Chessman, color: Chessman.Color, _) -> Bool in
+        exist = true
+        return figure == unit.figure && color == unit.color
+    })!
+    if exist == false {
+        print("Figure doesn't exist")
+        return
+    }
+    let collision = chessman.contains(where: {
+        (figure: Chessman, color: Chessman.Color, position: (char: Character, num: Int)) -> Bool in
+        return (figure != unit.figure || color != unit.color) &&
+        position == pos
+    })
+    let (char, num) = pos
+    if UnicodeScalar(String(char))!.value - 64 < 1 || UnicodeScalar(String(char))!.value - 64 > 8  || num < 1 || num > 8 || collision == true {
+        print("Wrong coordinates")
+        return
+    }
+    chessman[i] = (figure: unit.figure, color: unit.color, pos: (letter: char, num: num))
+}
+
 // func printFigure(unit: Figure) {
 //     if unit.color == Chessman.Color.white {
 //         switch unit.figure {
@@ -120,5 +153,7 @@ chessman.append((figure: .queen, color: .white, pos: (letter: "G", num: 2)))
 chessman.append((figure: .rook, color: .white, pos: (letter: "A", num: 1)))
 
 printPosFigure(chessman: chessman)
+
+moveFigure(chessman: &chessman, unit: chessman[2], pos: (char: "B", num: 1))
 
 printChessboard(chessman: chessman)
