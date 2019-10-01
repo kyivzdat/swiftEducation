@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  ex02
 //
-//  Created by Vladyslav PALAMARCHUK on 9/30/19.
+//  Created by Vladyslav PALAMARCHUK on 10/1/19.
 //  Copyright © 2019 Vladyslav PALAMARCHUK. All rights reserved.
 //
 

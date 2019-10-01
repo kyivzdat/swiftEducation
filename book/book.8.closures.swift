@@ -1,4 +1,4 @@
-func getInfo(wallet: [Int], closer: (Int) -> Bool) -> [Int] {
+ func getInfo(wallet: [Int], closer: (Int) -> Bool) -> [Int] {
     var res : [Int] = []
     for money in wallet {
         if closer(money) {
