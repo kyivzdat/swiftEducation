@@ -10,7 +10,7 @@ class Card : NSObject {
 	}
 
 	override var description : String {
-		return ("Card -> \(value), type -> \(color)")
+		return ("Card -> \(value)\ttype -> \(color)")
 	}
 
 	override func isEqual(_ object: Any?) -> Bool {
