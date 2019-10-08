@@ -37,11 +37,21 @@
                                     <action selector="segControl:" destination="Jfr-yH-ErF" eventType="valueChanged" id="9ld-oH-9tT"/>
                                 </connections>
                             </segmentedControl>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bZ5-uN-Dyg">
+                                <rect key="frame" x="336" y="732" width="58" height="58"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <state key="normal" image="nearMe"/>
+                                <connections>
+                                    <action selector="naviButton:" destination="Jfr-yH-ErF" eventType="touchUpInside" id="DTT-h8-F24"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="AFD-y4-Gf1" firstAttribute="centerX" secondItem="Yem-3u-co1" secondAttribute="centerX" id="63o-mQ-x64"/>
                             <constraint firstItem="Yem-3u-co1" firstAttribute="trailing" secondItem="yvm-SD-yhU" secondAttribute="trailing" id="JrV-Uz-oy4"/>
+                            <constraint firstItem="Yem-3u-co1" firstAttribute="bottom" secondItem="bZ5-uN-Dyg" secondAttribute="bottom" constant="23" id="iYJ-7x-pxj"/>
+                            <constraint firstItem="Yem-3u-co1" firstAttribute="trailing" secondItem="bZ5-uN-Dyg" secondAttribute="trailing" constant="20" id="nYT-qb-0eS"/>
                             <constraint firstItem="Yem-3u-co1" firstAttribute="bottom" secondItem="AFD-y4-Gf1" secondAttribute="bottom" constant="25" id="val-wU-dcp"/>
                             <constraint firstItem="Yem-3u-co1" firstAttribute="bottom" secondItem="yvm-SD-yhU" secondAttribute="bottom" id="xSm-GR-fiR"/>
                             <constraint firstItem="yvm-SD-yhU" firstAttribute="top" secondItem="Yem-3u-co1" secondAttribute="top" constant="-44" id="xWK-cW-Mpw"/>
@@ -52,6 +62,7 @@
                     <tabBarItem key="tabBarItem" title="Map" image="map" id="OPN-rg-Sc1"/>
                     <connections>
                         <outlet property="mapView" destination="yvm-SD-yhU" id="KxY-Vr-BKm"/>
+                        <outlet property="naviButton" destination="bZ5-uN-Dyg" id="XZe-pS-Zpj"/>
                         <outlet property="segControl" destination="AFD-y4-Gf1" id="mZe-sh-ryE"/>
                     </connections>
                 </viewController>
@@ -127,8 +138,8 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="15Y-gG-Oys" kind="relationship" relationship="viewControllers" id="MyZ-hP-aCJ"/>
-                        <segue destination="Jfr-yH-ErF" kind="relationship" relationship="viewControllers" id="Sg2-of-ykr"/>
+                        <segue destination="Jfr-yH-ErF" kind="relationship" relationship="viewControllers" id="POp-gA-tlc"/>
+                        <segue destination="15Y-gG-Oys" kind="relationship" relationship="viewControllers" id="Xxy-ae-blg"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q9a-VG-nHx" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -139,5 +150,6 @@
     <resources>
         <image name="list" width="30" height="30"/>
         <image name="map" width="30" height="30"/>
+        <image name="nearMe" width="30" height="30"/>
     </resources>
 </document>

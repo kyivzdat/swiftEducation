@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 class ListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -19,14 +20,20 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ArrayOfMapLocations.count
+        return mapLocations.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MapLocationTableViewCell
         
-        cell.mapLocationLabel.text = ArrayOfMapLocations[indexPath.row]
+        cell.mapLocationLabel.text = mapLocations[indexPath.row].title
+        
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let test = self.tabBarController?.viewControllers![0] as! MapViewController
+        test.zoomToLatestLocation(with: mapLocations[indexPath.row].coordinate)
+        self.tabBarController?.selectedViewController = test
+    }
 }
-
