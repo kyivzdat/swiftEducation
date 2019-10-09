@@ -12,6 +12,7 @@
 		E13E6AD4234CDC7500580DB4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E13E6AD2234CDC7500580DB4 /* Main.storyboard */; };
 		E13E6AD6234CDC7700580DB4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E13E6AD5234CDC7700580DB4 /* Assets.xcassets */; };
 		E13E6AD9234CDC7700580DB4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E13E6AD7234CDC7700580DB4 /* LaunchScreen.storyboard */; };
+		E19EA9AE234E20BF00A565D4 /* Figure.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19EA9AD234E20BF00A565D4 /* Figure.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		E13E6AD5234CDC7700580DB4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E13E6AD8234CDC7700580DB4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E13E6ADA234CDC7700580DB4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E19EA9AD234E20BF00A565D4 /* Figure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Figure.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,7 @@
 				E13E6ACE234CDC7500580DB4 /* AppDelegate.swift */,
 				E13E6AD0234CDC7500580DB4 /* ViewController.swift */,
 				E13E6AD2234CDC7500580DB4 /* Main.storyboard */,
+				E19EA9AD234E20BF00A565D4 /* Figure.swift */,
 				E13E6AD5234CDC7700580DB4 /* Assets.xcassets */,
 				E13E6AD7234CDC7700580DB4 /* LaunchScreen.storyboard */,
 				E13E6ADA234CDC7700580DB4 /* Info.plist */,
@@ -137,6 +140,7 @@
 			files = (
 				E13E6AD1234CDC7500580DB4 /* ViewController.swift in Sources */,
 				E13E6ACF234CDC7500580DB4 /* AppDelegate.swift in Sources */,
+				E19EA9AE234E20BF00A565D4 /* Figure.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
