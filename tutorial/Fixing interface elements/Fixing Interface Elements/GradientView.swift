@@ -45,7 +45,8 @@ class GradientView: UIView {
     required init?(coder aDecoder: NSCoder) {
         
         super.init(coder: aDecoder)
-        self.layer.addSublayer(gradientLayer)
+//        self.layer.addSublayer(gradientLayer)
+        self.layer.insertSublayer(gradientLayer, at: 0)
         gradientLayer.frame = bounds
         gradientLayer.colors = [startColor.cgColor, endColor.cgColor]
         gradientLayer.startPoint = startPoint
