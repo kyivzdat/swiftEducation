@@ -12,7 +12,7 @@ class ListTVC: UITableViewController {
 
     var restaurants: [Restaurant] = [
         Restaurant(name: "Ogonёk Grill&Bar", type: "ресторан", location: "Уфа", image: "ogonek.jpg", isVisited: false),
-        Restaurant(name: "Елу", type: "ресторан", location: "Уфа", image: "elu.jpg", isVisited: false),
+        Restaurant(name: "Елу", type: "ресторан", location: "Уфа, бульвар бульвар бульвар Хадии Давлетшиной, 21", image: "elu.jpg", isVisited: false),
         Restaurant(name: "Bonsai", type: "ресторан", location: "Уфа", image: "bonsai.jpg", isVisited: false),
         Restaurant(name: "Дастархан", type: "ресторан", location: "Уфа", image: "dastarhan.jpg", isVisited: false),
         Restaurant(name: "Индокитай", type: "ресторан", location: "Уфа", image: "indokitay.jpg", isVisited: false),
@@ -27,11 +27,15 @@ class ListTVC: UITableViewController {
         Restaurant(name: "Шок", type: "ресторан", location: "Уфа", image: "shok.jpg", isVisited: false),
         Restaurant(name: "Бочка", type: "ресторан", location:  "Уфа", image: "bochka.jpg", isVisited: false)]
     
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.hidesBarsOnSwipe = true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
-
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -109,6 +113,14 @@ class ListTVC: UITableViewController {
         if let indexPath = tableView.indexPathForSelectedRow {
             dvc.restaurant = restaurants[indexPath.row]
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    @IBAction func close(sender: UIStoryboardSegue) {
+    
     }
 
 }

@@ -12,14 +12,36 @@ class DetailVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var rateButton: UIButton!
     var restaurant: Restaurant?
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.hidesBarsOnSwipe = false
+        navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        imageView.image = UIImage(named: restaurant?.image ?? "")
         
+        let image = UIImage(named: "star")
+        let tintedImage = image?.withRenderingMode(.alwaysTemplate)
+        rateButton.setImage(tintedImage, for: .normal)
+        rateButton.tintColor = .yellow
+//        rateButton.layer.cornerRadius = 5
+//        rateButton.layer.borderWidth = 1
+//        rateButton.layer.borderColor = UIColor.yellow.cgColor
+        
+        imageView.image = UIImage(named: restaurant?.image ?? "")
+
         tableView.tableFooterView = UIView(frame: CGRect.zero)
+        title = restaurant?.name ?? ""
+    }
+    
+    @IBAction func unwindToDetail(_ unwindSegue: UIStoryboardSegue) {
+        guard let svc = unwindSegue.source as? RateVC else { return }
+        guard let rating = svc.rate else { return }
+        rateButton.setImage(UIImage(named: rating), for: .normal)
+        // Use data from the view controller which initiated the unwind segue
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -50,6 +72,13 @@ class DetailVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toMapVC" {
+            let dvc = segue.destination as! MapVC
+            dvc.restaurant = restaurant
+        }
     }
 
 }
