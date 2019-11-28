@@ -20,32 +20,33 @@ class NewRestaurantTVC: UITableViewController, UIImagePickerControllerDelegate, 
         super.viewDidLoad()
     }
     
-    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        if indexPath.row != 0 {
-            return nil
+    @IBAction func clickSaveButton(_ sender: UIBarButtonItem) {
+        var emptyFieldArray = ""
+        
+        if nameField.text == "" {
+            emptyFieldArray += "Name"
         }
-        return indexPath
+        if addressField.text == "" {
+            emptyFieldArray += emptyFieldArray.isEmpty ? "Address" : ", address"
+        }
+        if typeField.text == "" {
+            emptyFieldArray += emptyFieldArray.isEmpty ? "Type" : ", type"
+        }
+        
+        guard emptyFieldArray.isEmpty == false else {
+            
+            performSegue(withIdentifier: "saveNewRestaurantSegue", sender: nil)
+            return
+        }
+        
+        
+        let alertTittle = emptyFieldArray.components(separatedBy: " ").count == 1 ? "Empty field" : "Empty fields"
+        let ac = UIAlertController(title: alertTittle, message: emptyFieldArray, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        ac.addAction(okAction)
+        present(ac, animated: true)
     }
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        if indexPath.row == 0 {
-            let ac = UIAlertController(title: "Choose source of photo", message: nil, preferredStyle: .actionSheet)
-            let cameraAction = UIAlertAction(title: "Camera 📷", style: .default) { (action) in
-                self.chooseImagePickerAction(source: .camera)
-            }
-            let libImageAction = UIAlertAction(title: "Photo 🖼", style: .default) { (action) in
-                self.chooseImagePickerAction(source: .photoLibrary)
-            }
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-            ac.addAction(cameraAction)
-            ac.addAction(libImageAction)
-            ac.addAction(cancelAction)
-            self.present(ac, animated: true)
-            tableView.deselectRow(at: indexPath, animated: true)
-        }
-    }
-    
     func chooseImagePickerAction(source: UIImagePickerController.SourceType) {
         if UIImagePickerController.isSourceTypeAvailable(source) {
             let imagePicker = UIImagePickerController()
@@ -61,5 +62,25 @@ class NewRestaurantTVC: UITableViewController, UIImagePickerControllerDelegate, 
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         self.dismiss(animated: true)
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        self.view.endEditing(true)
+        if indexPath.row == 0 {
+            let ac = UIAlertController(title: "Choose source of photo", message: nil, preferredStyle: .actionSheet)
+            let cameraAction = UIAlertAction(title: "Camera 📷", style: .default) { (action) in
+                self.chooseImagePickerAction(source: .camera)
+            }
+            let libImageAction = UIAlertAction(title: "Photo 🖼", style: .default) { (action) in
+                self.chooseImagePickerAction(source: .photoLibrary)
+            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            ac.addAction(cameraAction)
+            ac.addAction(libImageAction)
+            ac.addAction(cancelAction)
+            self.present(ac, animated: true)
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
     }
 }
