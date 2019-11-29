@@ -33,18 +33,34 @@ class NewRestaurantTVC: UITableViewController, UIImagePickerControllerDelegate, 
             emptyFieldArray += emptyFieldArray.isEmpty ? "Type" : ", type"
         }
         
-        guard emptyFieldArray.isEmpty == false else {
-            
-            performSegue(withIdentifier: "saveNewRestaurantSegue", sender: nil)
+        guard emptyFieldArray.isEmpty == true else {
+            let alertTittle = emptyFieldArray.components(separatedBy: " ").count == 1 ? "Empty field" : "Empty fields"
+            let ac = UIAlertController(title: alertTittle, message: emptyFieldArray, preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+            ac.addAction(okAction)
+            present(ac, animated: true)
             return
         }
         
         
-        let alertTittle = emptyFieldArray.components(separatedBy: " ").count == 1 ? "Empty field" : "Empty fields"
-        let ac = UIAlertController(title: alertTittle, message: emptyFieldArray, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
-        ac.addAction(okAction)
-        present(ac, animated: true)
+        if let context = (UIApplication.shared.delegate as? AppDelegate)?.coreDataStack.persistentContainer.viewContext {
+            let restaurant = Restaurant(context: context)
+            restaurant.name = nameField.text
+            restaurant.type = typeField.text
+            restaurant.location = addressField.text
+            restaurant.isVisited = isVisitedSC!.selectedSegmentIndex == 0 ? false : true
+            if let image = imageView.image {
+                restaurant.image = image.pngData()
+            }
+            
+            do {
+                try context.save()
+                print("Success save 👍")
+            } catch let error as NSError {
+                print("Fail to save data: \(error)\n", error.userInfo)
+            }
+        }
+        performSegue(withIdentifier: "saveNewRestaurantSegue", sender: nil)
     }
 
     func chooseImagePickerAction(source: UIImagePickerController.SourceType) {

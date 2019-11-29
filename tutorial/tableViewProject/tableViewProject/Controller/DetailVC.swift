@@ -13,7 +13,7 @@ class DetailVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var rateButton: UIButton!
-    var restaurant: Restaurant?
+    var restaurant: Restaurant!
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.hidesBarsOnSwipe = false
@@ -31,7 +31,7 @@ class DetailVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
 //        rateButton.layer.borderWidth = 1
 //        rateButton.layer.borderColor = UIColor.yellow.cgColor
         
-        imageView.image = UIImage(named: restaurant?.image ?? "")
+        imageView.image = UIImage(data: restaurant.image! as Data)
 
         tableView.tableFooterView = UIView(frame: CGRect.zero)
         title = restaurant?.name ?? ""
