@@ -46,7 +46,7 @@ class NewRestaurantTVC: UITableViewController, UIImagePickerControllerDelegate, 
             let ac = UIAlertController(title: alertTittle, message: emptyFieldArray, preferredStyle: .alert)
             let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
             ac.addAction(okAction)
-0            present(ac, animated: true)
+            present(ac, animated: true)
             return
         }
         
