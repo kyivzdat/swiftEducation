@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class NewRestaurantTVC: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -15,6 +16,12 @@ class NewRestaurantTVC: UITableViewController, UIImagePickerControllerDelegate, 
     @IBOutlet weak var addressField: UITextField!
     @IBOutlet weak var typeField: UITextField!
     @IBOutlet weak var isVisitedSC: UISegmentedControl!
+    
+    @IBOutlet weak var likeButton: UIButton!
+    @IBOutlet weak var likeDislikeButton: UIButton!
+    @IBOutlet weak var dislikeButton: UIButton!
+    
+    var rating: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,15 +40,15 @@ class NewRestaurantTVC: UITableViewController, UIImagePickerControllerDelegate, 
             emptyFieldArray += emptyFieldArray.isEmpty ? "Type" : ", type"
         }
         
+        
         guard emptyFieldArray.isEmpty == true else {
             let alertTittle = emptyFieldArray.components(separatedBy: " ").count == 1 ? "Empty field" : "Empty fields"
             let ac = UIAlertController(title: alertTittle, message: emptyFieldArray, preferredStyle: .alert)
             let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
             ac.addAction(okAction)
-            present(ac, animated: true)
+0            present(ac, animated: true)
             return
         }
-        
         
         if let context = (UIApplication.shared.delegate as? AppDelegate)?.coreDataStack.persistentContainer.viewContext {
             let restaurant = Restaurant(context: context)
@@ -52,7 +59,11 @@ class NewRestaurantTVC: UITableViewController, UIImagePickerControllerDelegate, 
             if let image = imageView.image {
                 restaurant.image = image.pngData()
             }
-            
+            if rating != nil {
+                if let ratingImage = UIImage(named: rating!) {
+                    restaurant.rating = ratingImage.pngData()
+                }
+            }
             do {
                 try context.save()
                 print("Success save 👍")
@@ -61,6 +72,58 @@ class NewRestaurantTVC: UITableViewController, UIImagePickerControllerDelegate, 
             }
         }
         performSegue(withIdentifier: "saveNewRestaurantSegue", sender: nil)
+    }
+    
+    @IBAction func clickRateButton(sender: UIButton) {
+    
+        var sizeButtonArray: [[CGFloat]] = Array(repeatElement([1, 1], count: 3))
+        let buttonArray = [dislikeButton, likeDislikeButton, likeButton]
+
+        switch sender.tag {
+        case 0:
+            sizeButtonArray[2] = [1, 1]
+            sizeButtonArray[1] = [1, 1]
+    
+            if rating == "dislike" {
+                sizeButtonArray[0] = [1, 1]
+                rating = nil
+            } else {
+                rating = "dislike"
+                sizeButtonArray[0] = [1.3, 1.3]
+            }
+        case 1:
+            sizeButtonArray[2] = [1, 1]
+            sizeButtonArray[0] = [1, 1]
+
+            if rating == "like_dislike" {
+                rating = nil
+                sizeButtonArray[1] = [1, 1]
+            } else {
+                rating = "like_dislike"
+                sizeButtonArray[1] = [1.3, 1.3]
+            }
+        case 2:
+            sizeButtonArray[1] = [1, 1]
+            sizeButtonArray[0] = [1, 1]
+
+            if rating == "like" {
+                rating = nil
+                sizeButtonArray[2] = [1, 1]
+            } else {
+                rating = "like"
+                sizeButtonArray[2] = [1.3, 1.3]
+            }
+        default:
+            break
+        }
+        
+        for (index, button) in buttonArray.enumerated() {
+            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: {
+                let x = sizeButtonArray[index][0]
+                let y = sizeButtonArray[index][1]
+                button?.transform = CGAffineTransform(scaleX: x, y: y)
+            })
+        }
     }
 
     func chooseImagePickerAction(source: UIImagePickerController.SourceType) {
@@ -99,4 +162,5 @@ class NewRestaurantTVC: UITableViewController, UIImagePickerControllerDelegate, 
             tableView.deselectRow(at: indexPath, animated: true)
         }
     }
+    
 }

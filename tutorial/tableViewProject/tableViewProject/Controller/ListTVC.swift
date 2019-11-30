@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class ListTVC: UITableViewController, NSFetchedResultsControllerDelegate {
+class ListTVC: UITableViewController, NSFetchedResultsControllerDelegate, UINavigationControllerDelegate {
 
     var fetchResultsController: NSFetchedResultsController<Restaurant>!
     
@@ -32,12 +32,24 @@ class ListTVC: UITableViewController, NSFetchedResultsControllerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.hidesBarsOnSwipe = true
+        print("😄😄😄😄😄😄")
+        restaurants.forEach { (restaurant) in
+            print(restaurant.name ?? "name")
+            print(restaurant.rating ?? "rating")
+        }
+        if self.isMovingToParent {
+            print(2)
+        }
+        if self.isMovingFromParent {
+            print(3)
+        }
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        
+        navigationController?.delegate = self
         let fetchRequest: NSFetchRequest<Restaurant> = Restaurant.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
@@ -51,7 +63,6 @@ class ListTVC: UITableViewController, NSFetchedResultsControllerDelegate {
             } catch {
                 print(error)
             }
-            
         }
     }
     
@@ -60,25 +71,24 @@ class ListTVC: UITableViewController, NSFetchedResultsControllerDelegate {
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.beginUpdates()
     }
-    
+
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        
         switch type {
         case .insert:
             guard let indexPath = newIndexPath else { break }
             tableView.insertRows(at: [indexPath], with: .fade)
         case .delete:
-            guard let indexPath = newIndexPath else { break }
+            guard let indexPath = indexPath else { break }
             tableView.deleteRows(at: [indexPath], with: .fade)
         case .update:
-            guard let indexPath = newIndexPath else { break }
+            guard let indexPath = indexPath else { break }
             tableView.reloadRows(at: [indexPath], with: .fade)
         default:
             tableView.reloadData()
         }
         restaurants = controller.fetchedObjects as! [Restaurant]
     }
-    
+
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.endUpdates()
     }
@@ -94,55 +104,32 @@ class ListTVC: UITableViewController, NSFetchedResultsControllerDelegate {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! Cell
         
-        cell.nameLabel.text = restaurants[indexPath.row].name
-        cell.locationLabel.text = restaurants[indexPath.row].location
-        cell.typeLabel.text = restaurants[indexPath.row].type
-        cell.picture.image = UIImage(data: restaurants[indexPath.row].image! as Data)
+        let restaurant = restaurants[indexPath.row]
+        cell.nameLabel.text = restaurant.name
+        cell.locationLabel.text = restaurant.location
+        cell.typeLabel.text = restaurant.type
+        cell.picture.image = UIImage(data: restaurant.image! as Data)
         cell.picture.layer.cornerRadius = 10
-        cell.accessoryType = restaurants[indexPath.row].isVisited ? .checkmark : .none
+        cell.ratingImage.image = (restaurant.rating != nil) ? UIImage(data: restaurant.rating!) : nil
+        cell.accessoryType = restaurant.isVisited ? .checkmark : .none
         return cell
     }
-    
-//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let ac = UIAlertController(title: nil, message: "Choose action", preferredStyle: .actionSheet)
-//
-//        let message = isVisited[indexPath.row] ? "I have not been here" : "I have been here"
-//        let isVisitedAction = UIAlertAction(title: message, style: .default) { (action) in
-//            self.isVisited[indexPath.row] = !self.isVisited[indexPath.row]
-//            let cell = tableView.cellForRow(at: indexPath)
-//            cell?.accessoryType = self.isVisited[indexPath.row] ? .checkmark : .none
-//        }
-//        let call = UIAlertAction(title: "+38(097)342-43-3\(indexPath.row)", style: .default) { (action) in
-//            let alert = UIAlertController(title: "Ошибочка", message: "На даний момент абонент не може прийняти ваш дзвінок", preferredStyle: .alert)
-//            let action = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
-//            alert.addAction(action)
-//            self.present(alert, animated: true)
-//        }
-//
-//        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-//
-//        ac.addAction(call)
-//        ac.addAction(cancel)
-//        ac.addAction(isVisitedAction)
-//        present(ac, animated: true)
-//    }
-    
-//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-//        if editingStyle == .delete {
-//            restaurantNames.remove(at: indexPath.row)
-//            restaurantImages.remove(at: indexPath.row)
-//            isVisited.remove(at: indexPath.row)
-//            tableView.deleteRows(at: [indexPath], with: .fade)
-//        }
-//    }
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
         let delete = UITableViewRowAction(style: .default, title: "❌") { (action, indexPath) in
             self.restaurants.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-            
-            if let context = (UIaplic)
+            if let context = (UIApplication.shared.delegate as? AppDelegate)?.coreDataStack.persistentContainer.viewContext {
+                let objectToDelete = self.fetchResultsController.object(at: indexPath)
+                context.delete(objectToDelete)
+                
+                do {
+                    try context.save()
+                    print("Save row was success! 👍")
+                } catch {
+                    print ("Save row was not success! 👎\n", error)
+                }
+            }
         }
         
         let share = UITableViewRowAction(style: .default, title: "✉️") { (action, indexPath) in
@@ -155,6 +142,7 @@ class ListTVC: UITableViewController, NSFetchedResultsControllerDelegate {
         share.backgroundColor = #colorLiteral(red: 0.2549019608, green: 0.6117647059, blue: 1, alpha: 1)
         return [delete, share]
     }
+    
 
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -169,7 +157,7 @@ class ListTVC: UITableViewController, NSFetchedResultsControllerDelegate {
     }
     
     @IBAction func close(sender: UIStoryboardSegue) {
-    
     }
 
 }
+
