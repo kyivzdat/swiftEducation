@@ -30,7 +30,6 @@ class MapVC: UIViewController, MKMapViewDelegate {
         if annotationView == nil {
             annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
             annotationView?.canShowCallout = true
-            print(1)
         }
         
         let rightImage = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))

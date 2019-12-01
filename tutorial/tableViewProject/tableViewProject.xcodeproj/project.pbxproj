@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		AC9590FB239127C20028F567 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9590FA239127C20028F567 /* CoreDataStack.swift */; };
 		AC9590FE239128920028F567 /* RestaurantModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AC9590FC239128920028F567 /* RestaurantModel.xcdatamodeld */; };
+		E1566A9D2393DFE600929B26 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1566A9C2393DFE600929B26 /* CustomButton.swift */; };
 		E1B0F3A3238BE963008FD4CC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B0F3A2238BE963008FD4CC /* AppDelegate.swift */; };
 		E1B0F3A8238BE964008FD4CC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1B0F3A6238BE964008FD4CC /* Main.storyboard */; };
 		E1B0F3AA238BE968008FD4CC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1B0F3A9238BE968008FD4CC /* Assets.xcassets */; };
@@ -25,6 +26,7 @@
 /* Begin PBXFileReference section */
 		AC9590FA239127C20028F567 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		AC9590FD239128920028F567 /* RestaurantsModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RestaurantsModel.xcdatamodel; sourceTree = "<group>"; };
+		E1566A9C2393DFE600929B26 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		E1B0F39F238BE963008FD4CC /* tableViewProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tableViewProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1B0F3A2238BE963008FD4CC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E1B0F3A7238BE964008FD4CC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 				E1B4C52B238D35600001EC5B /* Controller */,
 				E1B4C52C238D35770001EC5B /* Cell */,
 				E1B0F3A6238BE964008FD4CC /* Main.storyboard */,
+				E1566A9C2393DFE600929B26 /* CustomButton.swift */,
 				E1B0F3A9238BE968008FD4CC /* Assets.xcassets */,
 				E1B0F3AB238BE968008FD4CC /* LaunchScreen.storyboard */,
 				E1B0F3AE238BE968008FD4CC /* Info.plist */,
@@ -182,6 +185,7 @@
 				E1B0F3B9238C209A008FD4CC /* DetailVC.swift in Sources */,
 				AC9590FB239127C20028F567 /* CoreDataStack.swift in Sources */,
 				E1B0F3B5238BEA04008FD4CC /* ListTVC.swift in Sources */,
+				E1566A9D2393DFE600929B26 /* CustomButton.swift in Sources */,
 				E1DBFD1C238E8C9300C36E69 /* MapVC.swift in Sources */,
 				E1B4C52E238D48120001EC5B /* RateVC.swift in Sources */,
 				E1B0F3B7238BEC47008FD4CC /* Cell.swift in Sources */,

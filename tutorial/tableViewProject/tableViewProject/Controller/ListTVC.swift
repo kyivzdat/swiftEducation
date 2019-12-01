@@ -13,6 +13,9 @@ class ListTVC: UITableViewController, NSFetchedResultsControllerDelegate, UINavi
 
     var fetchResultsController: NSFetchedResultsController<Restaurant>!
     
+    var searchController: UISearchController!
+    var filteredRestaurants: [Restaurant] = []
+    
     var restaurants: [Restaurant] = []
 /*        Restaurant(name: "Ogonёk Grill&Bar", type: "ресторан", location: "Уфа", image: "ogonek.jpg", isVisited: false),
         Restaurant(name: "Елу", type: "ресторан", location: "Уфа, бульвар бульвар бульвар Хадии Давлетшиной, 21", image: "elu.jpg", isVisited: false),
@@ -32,22 +35,18 @@ class ListTVC: UITableViewController, NSFetchedResultsControllerDelegate, UINavi
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.hidesBarsOnSwipe = true
-        print("😄😄😄😄😄😄")
-        restaurants.forEach { (restaurant) in
-            print(restaurant.name ?? "name")
-            print(restaurant.rating ?? "rating")
-        }
-        if self.isMovingToParent {
-            print(2)
-        }
-        if self.isMovingFromParent {
-            print(3)
-        }
     }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        searchController = UISearchController(searchResultsController: nil)
+        searchController?.searchResultsUpdater = self
+//        searchController.delegate = self
+        searchController.dimsBackgroundDuringPresentation = false
+        navigationItem.searchController = searchController
+        
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationController?.delegate = self
         let fetchRequest: NSFetchRequest<Restaurant> = Restaurant.fetchRequest()
@@ -61,7 +60,7 @@ class ListTVC: UITableViewController, NSFetchedResultsControllerDelegate, UINavi
                 try fetchResultsController.performFetch()
                 restaurants = fetchResultsController.fetchedObjects!
             } catch {
-                print(error)
+                print("Fail to fetch context! 👎", error)
             }
         }
     }
@@ -96,15 +95,29 @@ class ListTVC: UITableViewController, NSFetchedResultsControllerDelegate, UINavi
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
+    
+    func restaurantsToDisplayAt(indexPath: IndexPath) -> Restaurant {
+        var restaurant: Restaurant
+        
+        if searchController.isActive && searchController.searchBar.text != "" {
+            restaurant = filteredRestaurants[indexPath.row]
+        } else {
+            restaurant = restaurants[indexPath.row]
+        }
+        return restaurant
+    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if searchController.isActive && searchController.searchBar.text != "" {
+            return filteredRestaurants.count
+        }
         return restaurants.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! Cell
         
-        let restaurant = restaurants[indexPath.row]
+        let restaurant = restaurantsToDisplayAt(indexPath: indexPath)
         cell.nameLabel.text = restaurant.name
         cell.locationLabel.text = restaurant.location
         cell.typeLabel.text = restaurant.type
@@ -118,7 +131,17 @@ class ListTVC: UITableViewController, NSFetchedResultsControllerDelegate, UINavi
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
         let delete = UITableViewRowAction(style: .default, title: "❌") { (action, indexPath) in
-            self.restaurants.remove(at: indexPath.row)
+            
+            if self.searchController.isActive && self.searchController.searchBar.text != "" {
+                for (index, restaurant) in self.restaurants.enumerated() {
+                    if restaurant.name == self.filteredRestaurants[indexPath.row].name {
+                        self.restaurants.remove(at: index)
+                        break
+                    }
+                }
+            } else {
+                self.restaurants.remove(at: indexPath.row)
+            }
             if let context = (UIApplication.shared.delegate as? AppDelegate)?.coreDataStack.persistentContainer.viewContext {
                 let objectToDelete = self.fetchResultsController.object(at: indexPath)
                 context.delete(objectToDelete)
@@ -143,12 +166,10 @@ class ListTVC: UITableViewController, NSFetchedResultsControllerDelegate, UINavi
         return [delete, share]
     }
     
-
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let dvc = segue.destination as? DetailVC else { return }
         if let indexPath = tableView.indexPathForSelectedRow {
-            dvc.restaurant = restaurants[indexPath.row]
+            dvc.restaurant = restaurantsToDisplayAt(indexPath: indexPath)
         }
     }
     
@@ -158,6 +179,19 @@ class ListTVC: UITableViewController, NSFetchedResultsControllerDelegate, UINavi
     
     @IBAction func close(sender: UIStoryboardSegue) {
     }
+    
+    func filterContentFor(searchText text: String) {
+        filteredRestaurants = restaurants.filter({ (restaurant) -> Bool in
+            return (restaurant.name!.lowercased()).contains(text.lowercased())
+        })
+    }
 
+}
+
+extension ListTVC: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        filterContentFor(searchText: searchController.searchBar.text!)
+        tableView.reloadData()
+    }
 }
 

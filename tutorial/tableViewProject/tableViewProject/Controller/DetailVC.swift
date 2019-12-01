@@ -41,16 +41,6 @@ class DetailVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-
-        if self.isMovingFromParent {
-            guard let vc = storyboard?.instantiateViewController(withIdentifier: "MyRestaurants") as? ListTVC else { return }
-            for i in 0..<vc.restaurants.count {
-                if vc.restaurants[i].name == restaurant.name {
-                    vc.restaurants[i] = restaurant
-                    break
-                }
-            }
-        }
     }
     
     @IBAction func unwindToDetail(_ unwindSegue: UIStoryboardSegue) {

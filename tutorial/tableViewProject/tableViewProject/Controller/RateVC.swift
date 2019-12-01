@@ -32,9 +32,6 @@ class RateVC: UIViewController {
     }
 
     override func viewDidAppear(_ animated: Bool) {
-//        UIView.animate(withDuration: 0.4) {
-//            self.rateStack.transform = CGAffineTransform(scaleX: 1, y: 1)
-//        }
         let elementArray = [textLabel, dislikeButton, likeDislikeButton, likeButton]
         for element in elementArray {
             UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
@@ -45,13 +42,40 @@ class RateVC: UIViewController {
     
     @IBAction func tapRate(sender: UIButton) {
         
+//        var buttonSize: [[CGFloat]] = Array(repeating: [1, 1], count: 3)
+        var buttonSize: [UIButton: [CGFloat]] = [dislikeButton: [1, 1],
+                          likeDislikeButton: [1, 1],
+                          likeButton: [1, 1]]
+        let buttonArray = [dislikeButton, likeDislikeButton, likeButton]
+        
         switch sender.tag {
-        case 0: rate = "dislike"
-        case 1: rate = "like_dislike"
-        case 2: rate = "like"
+        case 0:
+            buttonSize[likeDislikeButton] = [1, 1]
+            buttonSize[likeButton] = [1, 1]
+            buttonSize[dislikeButton] = (rate == "dislike") ? [1, 1] : [1.3, 1.3]
+            rate = (rate == "dislike") ? nil : "dislike"
+        case 1:
+            buttonSize[dislikeButton] = [1, 1]
+            buttonSize[likeButton] = [1, 1]
+            buttonSize[likeDislikeButton] = (rate == "like_dislike") ? [1, 1] : [1.3, 1.3]
+            rate = (rate == "like_dislike") ? nil : "like_dislike"
+        case 2:
+            buttonSize[dislikeButton] = [1, 1]
+            buttonSize[likeDislikeButton] = [1, 1]
+            buttonSize[likeButton] = (rate == "like") ? [1, 1] : [1.3, 1.3]
+            rate = (rate == "like") ? nil : "like"
         default: break
         }
-        performSegue(withIdentifier: "unwindSegueToDetail", sender: sender)
+        
+        for button in buttonArray {
+            if let xy = buttonSize[button!] {
+                UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut, animations: {
+                    button?.transform = CGAffineTransform(scaleX: xy[0], y: xy[1])
+                })
+            }
+        }
+        
+        
     }
     
     func setButtonColor() {
