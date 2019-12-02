@@ -14,41 +14,36 @@ class ListTVC: UITableViewController, NSFetchedResultsControllerDelegate, UINavi
     var fetchResultsController: NSFetchedResultsController<Restaurant>!
     
     var searchController: UISearchController!
+
     var filteredRestaurants: [Restaurant] = []
-    
     var restaurants: [Restaurant] = []
-/*        Restaurant(name: "Ogonёk Grill&Bar", type: "ресторан", location: "Уфа", image: "ogonek.jpg", isVisited: false),
-        Restaurant(name: "Елу", type: "ресторан", location: "Уфа, бульвар бульвар бульвар Хадии Давлетшиной, 21", image: "elu.jpg", isVisited: false),
-        Restaurant(name: "Bonsai", type: "ресторан", location: "Уфа", image: "bonsai.jpg", isVisited: false),
-        Restaurant(name: "Дастархан", type: "ресторан", location: "Уфа", image: "dastarhan.jpg", isVisited: false),
-        Restaurant(name: "Индокитай", type: "ресторан", location: "Уфа", image: "indokitay.jpg", isVisited: false),
-        Restaurant(name: "X.O", type: "ресторан-клуб", location: "Уфа", image: "x.o.jpg", isVisited: false),
-        Restaurant(name: "Балкан Гриль", type: "ресторан", location: "Уфа", image: "balkan.jpg", isVisited: false),
-        Restaurant(name: "Respublica", type: "ресторан", location: "Уфа", image: "respublika.jpg", isVisited: false),
-        Restaurant(name: "Speak Easy", type: "ресторанный комплекс", location: "Уфа", image: "speakeasy.jpg", isVisited: false),
-        Restaurant(name: "Morris Pub", type: "ресторан", location: "Уфа", image: "morris.jpg", isVisited: false),
-        Restaurant(name: "Вкусные истории", type: "ресторан", location: "Уфа", image: "istorii.jpg", isVisited: false),
-        Restaurant(name: "Классик", type: "ресторан", location: "Уфа", image: "klassik.jpg", isVisited: false),
-        Restaurant(name: "Love&Life", type: "ресторан", location: "Уфа", image: "love.jpg", isVisited: false),
-        Restaurant(name: "Шок", type: "ресторан", location: "Уфа", image: "shok.jpg", isVisited: false),
-        Restaurant(name: "Бочка", type: "ресторан", location:  "Уфа", image: "bochka.jpg", isVisited: false)] */
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.hidesBarsOnSwipe = true
     }
     
+    //MARK: - viewDidLoad
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        searchController = UISearchController(searchResultsController: nil)
-        searchController?.searchResultsUpdater = self
-//        searchController.delegate = self
-        searchController.dimsBackgroundDuringPresentation = false
-        navigationItem.searchController = searchController
-        
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationController?.delegate = self
+        setupSearchController()
+        initRestaurantsFromDB()
+    }
+    
+    func setupSearchController() {
+        searchController = UISearchController(searchResultsController: nil)
+        searchController?.searchResultsUpdater = self
+        //        searchController.delegate = self
+        searchController.dimsBackgroundDuringPresentation = false
+        definesPresentationContext = true
+        navigationItem.searchController = searchController
+    }
+    
+    
+    func initRestaurantsFromDB() {
         let fetchRequest: NSFetchRequest<Restaurant> = Restaurant.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
@@ -72,6 +67,7 @@ class ListTVC: UITableViewController, NSFetchedResultsControllerDelegate, UINavi
     }
 
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+
         switch type {
         case .insert:
             guard let indexPath = newIndexPath else { break }
@@ -79,6 +75,24 @@ class ListTVC: UITableViewController, NSFetchedResultsControllerDelegate, UINavi
         case .delete:
             guard let indexPath = indexPath else { break }
             tableView.deleteRows(at: [indexPath], with: .fade)
+
+//            guard let indexPath = indexPath else { break }
+//            tableView.deleteRows(at: [indexPath], with: .fade)
+//            var newIndexPath = indexPath
+//            if self.searchController.searchBar.text != "" {
+//                for (index, restaurant) in self.filteredRestaurants.enumerated() {
+//                    if restaurant.name == self.restaurants[indexPath.row].name {
+//                        guard let testIndexPath = self.fetchResultsController.indexPath(forObject: restaurant) else { return }
+//                        newIndexPath = testIndexPath
+//                        tableView.deleteRows(at: [newIndexPath], with: .fade)
+//                        self.filteredRestaurants.remove(at: index)
+//                        self.restaurants.remove(at: indexPath.row)
+//                        break
+//                    }
+//                }
+//            } else {
+////                tableView.deleteRows(at: [newIndexPath], with: .fade)
+//            }
         case .update:
             guard let indexPath = indexPath else { break }
             tableView.reloadRows(at: [indexPath], with: .fade)
@@ -91,7 +105,7 @@ class ListTVC: UITableViewController, NSFetchedResultsControllerDelegate, UINavi
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.endUpdates()
     }
-    
+
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -132,29 +146,43 @@ class ListTVC: UITableViewController, NSFetchedResultsControllerDelegate, UINavi
         
         let delete = UITableViewRowAction(style: .default, title: "❌") { (action, indexPath) in
             
-            if self.searchController.isActive && self.searchController.searchBar.text != "" {
-                for (index, restaurant) in self.restaurants.enumerated() {
-                    if restaurant.name == self.filteredRestaurants[indexPath.row].name {
-                        self.restaurants.remove(at: index)
-                        break
-                    }
-                }
-            } else {
+//            print("Delete")
+//
+//            var newIndexPath = indexPath
+//            if self.searchController.isActive && self.searchController.searchBar.text != "" {
+//                for (index, restaurant) in self.restaurants.enumerated() {
+//                    if restaurant.name == self.filteredRestaurants[indexPath.row].name {
+//
+//                        guard let testIndexPath = self.fetchResultsController.indexPath(forObject: self.restaurants[index]) else { return }
+//                        newIndexPath = testIndexPath
+//
+//                        self.filteredRestaurants.remove(at: indexPath.row)
+//                        self.restaurants.remove(at: newIndexPath.row)
+//                        break
+//                    }
+//                }
+//            } else {
                 self.restaurants.remove(at: indexPath.row)
-            }
+//            }
+        
             if let context = (UIApplication.shared.delegate as? AppDelegate)?.coreDataStack.persistentContainer.viewContext {
+                
                 let objectToDelete = self.fetchResultsController.object(at: indexPath)
+//                newIndexPath = indexPath
                 context.delete(objectToDelete)
                 
                 do {
+                    
                     try context.save()
-                    print("Save row was success! 👍")
+                    print("Delete row was success! 👍")
+//                    if self.searchController.isActive && self.searchController.searchBar.text != "" {
+//                        tableView.deleteRows(at: [indexPath], with: .fade)
+//                    }
                 } catch {
-                    print ("Save row was not success! 👎\n", error)
+                    print ("Delete row was not success! 👎\n", error)
                 }
             }
         }
-        
         let share = UITableViewRowAction(style: .default, title: "✉️") { (action, indexPath) in
             let text = "Now, I'm in " + (self.restaurants[indexPath.row].name ?? "")
             if let image = UIImage(data: self.restaurants[indexPath.row].image! as Data) {

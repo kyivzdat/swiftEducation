@@ -66,9 +66,9 @@ class NewRestaurantTVC: UITableViewController, UIImagePickerControllerDelegate, 
             }
             do {
                 try context.save()
-                print("Success save 👍")
+                print("Success save new restaurant! 👍")
             } catch let error as NSError {
-                print("Fail to save data: \(error)\n", error.userInfo)
+                print("Fail to save data of new restaurant! 👎\n\(error)\n", error.userInfo)
             }
         }
         performSegue(withIdentifier: "saveNewRestaurantSegue", sender: nil)
