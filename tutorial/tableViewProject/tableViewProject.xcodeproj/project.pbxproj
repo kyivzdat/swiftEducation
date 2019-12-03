@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		AC9590FB239127C20028F567 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9590FA239127C20028F567 /* CoreDataStack.swift */; };
 		AC9590FE239128920028F567 /* RestaurantModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AC9590FC239128920028F567 /* RestaurantModel.xcdatamodeld */; };
+		E1560DD523967D2F005BD3DF /* ContentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1560DD423967D2F005BD3DF /* ContentVC.swift */; };
+		E1560DD723967D56005BD3DF /* PageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1560DD623967D56005BD3DF /* PageVC.swift */; };
+		E1560DDC2396CAAD005BD3DF /* AboutTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1560DDB2396CAAD005BD3DF /* AboutTVC.swift */; };
 		E1566A9D2393DFE600929B26 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1566A9C2393DFE600929B26 /* CustomButton.swift */; };
 		E1B0F3A3238BE963008FD4CC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B0F3A2238BE963008FD4CC /* AppDelegate.swift */; };
 		E1B0F3A8238BE964008FD4CC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1B0F3A6238BE964008FD4CC /* Main.storyboard */; };
@@ -26,6 +29,9 @@
 /* Begin PBXFileReference section */
 		AC9590FA239127C20028F567 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		AC9590FD239128920028F567 /* RestaurantsModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RestaurantsModel.xcdatamodel; sourceTree = "<group>"; };
+		E1560DD423967D2F005BD3DF /* ContentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContentVC.swift; path = ../ContentVC.swift; sourceTree = "<group>"; };
+		E1560DD623967D56005BD3DF /* PageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PageVC.swift; path = ../PageVC.swift; sourceTree = "<group>"; };
+		E1560DDB2396CAAD005BD3DF /* AboutTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutTVC.swift; sourceTree = "<group>"; };
 		E1566A9C2393DFE600929B26 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		E1B0F39F238BE963008FD4CC /* tableViewProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tableViewProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1B0F3A2238BE963008FD4CC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -53,6 +59,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E1560DD823967D5E005BD3DF /* PageVC */ = {
+			isa = PBXGroup;
+			children = (
+				E1560DD623967D56005BD3DF /* PageVC.swift */,
+				E1560DD423967D2F005BD3DF /* ContentVC.swift */,
+			);
+			path = PageVC;
+			sourceTree = "<group>";
+		};
 		E1B0F396238BE963008FD4CC = {
 			isa = PBXGroup;
 			children = (
@@ -77,6 +92,7 @@
 				AC9590FC239128920028F567 /* RestaurantModel.xcdatamodeld */,
 				E1B4C52B238D35600001EC5B /* Controller */,
 				E1B4C52C238D35770001EC5B /* Cell */,
+				E1560DD823967D5E005BD3DF /* PageVC */,
 				E1B0F3A6238BE964008FD4CC /* Main.storyboard */,
 				E1566A9C2393DFE600929B26 /* CustomButton.swift */,
 				E1B0F3A9238BE968008FD4CC /* Assets.xcassets */,
@@ -89,6 +105,7 @@
 		E1B4C52B238D35600001EC5B /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				E1560DDB2396CAAD005BD3DF /* AboutTVC.swift */,
 				E1DBFD1B238E8C9300C36E69 /* MapVC.swift */,
 				E1B0F3B4238BEA04008FD4CC /* ListTVC.swift */,
 				E1DBFD1D238ED50700C36E69 /* NewRestaurantTVC.swift */,
@@ -180,15 +197,18 @@
 			files = (
 				AC9590FE239128920028F567 /* RestaurantModel.xcdatamodeld in Sources */,
 				E1DBFD1E238ED50700C36E69 /* NewRestaurantTVC.swift in Sources */,
+				E1560DD523967D2F005BD3DF /* ContentVC.swift in Sources */,
 				E1B0F3A3238BE963008FD4CC /* AppDelegate.swift in Sources */,
 				E1B0F3BD238C2D07008FD4CC /* DetailCell.swift in Sources */,
 				E1B0F3B9238C209A008FD4CC /* DetailVC.swift in Sources */,
 				AC9590FB239127C20028F567 /* CoreDataStack.swift in Sources */,
+				E1560DD723967D56005BD3DF /* PageVC.swift in Sources */,
 				E1B0F3B5238BEA04008FD4CC /* ListTVC.swift in Sources */,
 				E1566A9D2393DFE600929B26 /* CustomButton.swift in Sources */,
 				E1DBFD1C238E8C9300C36E69 /* MapVC.swift in Sources */,
 				E1B4C52E238D48120001EC5B /* RateVC.swift in Sources */,
 				E1B0F3B7238BEC47008FD4CC /* Cell.swift in Sources */,
+				E1560DDC2396CAAD005BD3DF /* AboutTVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

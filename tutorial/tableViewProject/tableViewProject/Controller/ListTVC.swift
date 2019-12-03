@@ -10,11 +10,11 @@ import UIKit
 import CoreData
 
 class ListTVC: UITableViewController, NSFetchedResultsControllerDelegate, UINavigationControllerDelegate {
-
+    
     var fetchResultsController: NSFetchedResultsController<Restaurant>!
     
     var searchController: UISearchController!
-
+    
     var filteredRestaurants: [Restaurant] = []
     var restaurants: [Restaurant] = []
     
@@ -60,14 +60,28 @@ class ListTVC: UITableViewController, NSFetchedResultsControllerDelegate, UINavi
         }
     }
     
+    //MARK: - viewDidAppear
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        let userDefaults = UserDefaults.standard
+        let wasIntroWatched = userDefaults.bool(forKey: "wasIntroWatched")
+        guard wasIntroWatched == false else { return }
+        
+        if let pageVC = storyboard?.instantiateViewController(withIdentifier: "pageViewController") {
+            present(pageVC, animated: true)
+        }
+    }
+    
     //MARK: - Fetch core data
     
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.beginUpdates()
     }
-
+    
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-
+        
         switch type {
         case .insert:
             guard let indexPath = newIndexPath else { break }
@@ -75,24 +89,6 @@ class ListTVC: UITableViewController, NSFetchedResultsControllerDelegate, UINavi
         case .delete:
             guard let indexPath = indexPath else { break }
             tableView.deleteRows(at: [indexPath], with: .fade)
-
-//            guard let indexPath = indexPath else { break }
-//            tableView.deleteRows(at: [indexPath], with: .fade)
-//            var newIndexPath = indexPath
-//            if self.searchController.searchBar.text != "" {
-//                for (index, restaurant) in self.filteredRestaurants.enumerated() {
-//                    if restaurant.name == self.restaurants[indexPath.row].name {
-//                        guard let testIndexPath = self.fetchResultsController.indexPath(forObject: restaurant) else { return }
-//                        newIndexPath = testIndexPath
-//                        tableView.deleteRows(at: [newIndexPath], with: .fade)
-//                        self.filteredRestaurants.remove(at: index)
-//                        self.restaurants.remove(at: indexPath.row)
-//                        break
-//                    }
-//                }
-//            } else {
-////                tableView.deleteRows(at: [newIndexPath], with: .fade)
-//            }
         case .update:
             guard let indexPath = indexPath else { break }
             tableView.reloadRows(at: [indexPath], with: .fade)
@@ -101,11 +97,11 @@ class ListTVC: UITableViewController, NSFetchedResultsControllerDelegate, UINavi
         }
         restaurants = controller.fetchedObjects as! [Restaurant]
     }
-
+    
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.endUpdates()
     }
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -120,7 +116,7 @@ class ListTVC: UITableViewController, NSFetchedResultsControllerDelegate, UINavi
         }
         return restaurant
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if searchController.isActive && searchController.searchBar.text != "" {
             return filteredRestaurants.count
@@ -145,39 +141,27 @@ class ListTVC: UITableViewController, NSFetchedResultsControllerDelegate, UINavi
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
         let delete = UITableViewRowAction(style: .default, title: "❌") { (action, indexPath) in
+
+            var newIndexPath = indexPath
+            if self.searchController.isActive && self.searchController.searchBar.text != "" {
+                for (index, restaurant) in self.restaurants.enumerated() {
+                    if restaurant.name == self.filteredRestaurants[indexPath.row].name {
+
+                        guard let testIndexPath = self.fetchResultsController.indexPath(forObject: self.restaurants[index]) else { return }
+                        newIndexPath = testIndexPath
+                        break
+                    }
+                }
+            }
             
-//            print("Delete")
-//
-//            var newIndexPath = indexPath
-//            if self.searchController.isActive && self.searchController.searchBar.text != "" {
-//                for (index, restaurant) in self.restaurants.enumerated() {
-//                    if restaurant.name == self.filteredRestaurants[indexPath.row].name {
-//
-//                        guard let testIndexPath = self.fetchResultsController.indexPath(forObject: self.restaurants[index]) else { return }
-//                        newIndexPath = testIndexPath
-//
-//                        self.filteredRestaurants.remove(at: indexPath.row)
-//                        self.restaurants.remove(at: newIndexPath.row)
-//                        break
-//                    }
-//                }
-//            } else {
-                self.restaurants.remove(at: indexPath.row)
-//            }
-        
             if let context = (UIApplication.shared.delegate as? AppDelegate)?.coreDataStack.persistentContainer.viewContext {
                 
-                let objectToDelete = self.fetchResultsController.object(at: indexPath)
-//                newIndexPath = indexPath
+                let objectToDelete = self.fetchResultsController.object(at: newIndexPath)
                 context.delete(objectToDelete)
                 
                 do {
-                    
                     try context.save()
                     print("Delete row was success! 👍")
-//                    if self.searchController.isActive && self.searchController.searchBar.text != "" {
-//                        tableView.deleteRows(at: [indexPath], with: .fade)
-//                    }
                 } catch {
                     print ("Delete row was not success! 👎\n", error)
                 }
@@ -213,7 +197,7 @@ class ListTVC: UITableViewController, NSFetchedResultsControllerDelegate, UINavi
             return (restaurant.name!.lowercased()).contains(text.lowercased())
         })
     }
-
+    
 }
 
 extension ListTVC: UISearchResultsUpdating {
