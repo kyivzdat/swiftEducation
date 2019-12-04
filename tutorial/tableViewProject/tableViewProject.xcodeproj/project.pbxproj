@@ -21,6 +21,7 @@
 		E1B0F3B7238BEC47008FD4CC /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B0F3B6238BEC47008FD4CC /* Cell.swift */; };
 		E1B0F3B9238C209A008FD4CC /* DetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B0F3B8238C209A008FD4CC /* DetailVC.swift */; };
 		E1B0F3BD238C2D07008FD4CC /* DetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B0F3BC238C2D07008FD4CC /* DetailCell.swift */; };
+		E1B1C2942397D67000F0B3D1 /* WebViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B1C2932397D67000F0B3D1 /* WebViewVC.swift */; };
 		E1B4C52E238D48120001EC5B /* RateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B4C52D238D48120001EC5B /* RateVC.swift */; };
 		E1DBFD1C238E8C9300C36E69 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DBFD1B238E8C9300C36E69 /* MapVC.swift */; };
 		E1DBFD1E238ED50700C36E69 /* NewRestaurantTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DBFD1D238ED50700C36E69 /* NewRestaurantTVC.swift */; };
@@ -43,6 +44,7 @@
 		E1B0F3B6238BEC47008FD4CC /* Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
 		E1B0F3B8238C209A008FD4CC /* DetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVC.swift; sourceTree = "<group>"; };
 		E1B0F3BC238C2D07008FD4CC /* DetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCell.swift; sourceTree = "<group>"; };
+		E1B1C2932397D67000F0B3D1 /* WebViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WebViewVC.swift; path = ../WebViewVC.swift; sourceTree = "<group>"; };
 		E1B4C52D238D48120001EC5B /* RateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateVC.swift; sourceTree = "<group>"; };
 		E1DBFD1B238E8C9300C36E69 /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 		E1DBFD1D238ED50700C36E69 /* NewRestaurantTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewRestaurantTVC.swift; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				E1560DDB2396CAAD005BD3DF /* AboutTVC.swift */,
+				E1B1C2932397D67000F0B3D1 /* WebViewVC.swift */,
 				E1DBFD1B238E8C9300C36E69 /* MapVC.swift */,
 				E1B0F3B4238BEA04008FD4CC /* ListTVC.swift */,
 				E1DBFD1D238ED50700C36E69 /* NewRestaurantTVC.swift */,
@@ -197,6 +200,7 @@
 			files = (
 				AC9590FE239128920028F567 /* RestaurantModel.xcdatamodeld in Sources */,
 				E1DBFD1E238ED50700C36E69 /* NewRestaurantTVC.swift in Sources */,
+				E1B1C2942397D67000F0B3D1 /* WebViewVC.swift in Sources */,
 				E1560DD523967D2F005BD3DF /* ContentVC.swift in Sources */,
 				E1B0F3A3238BE963008FD4CC /* AppDelegate.swift in Sources */,
 				E1B0F3BD238C2D07008FD4CC /* DetailCell.swift in Sources */,
