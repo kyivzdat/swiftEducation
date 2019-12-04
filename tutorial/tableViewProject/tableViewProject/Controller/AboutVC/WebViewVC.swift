@@ -29,7 +29,6 @@ class WebViewVC: UIViewController, WKNavigationDelegate, WKUIDelegate {
         let request = URLRequest(url: url)
         webView.load(request)
         
-        
         addCustomToolBar()
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
     }
@@ -90,5 +89,4 @@ class WebViewVC: UIViewController, WKNavigationDelegate, WKUIDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         title = webView.title
     }
-    
 }

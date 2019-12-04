@@ -60,7 +60,7 @@ class ListTVC: UITableViewController, NSFetchedResultsControllerDelegate, UINavi
         }
     }
     
-    //MARK: - viewDidAppear
+    //MARK: - init intro
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -167,6 +167,7 @@ class ListTVC: UITableViewController, NSFetchedResultsControllerDelegate, UINavi
                 }
             }
         }
+
         let share = UITableViewRowAction(style: .default, title: "✉️") { (action, indexPath) in
             let text = "Now, I'm in " + (self.restaurants[indexPath.row].name ?? "")
             if let image = UIImage(data: self.restaurants[indexPath.row].image! as Data) {
